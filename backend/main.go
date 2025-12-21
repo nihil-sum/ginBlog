@@ -25,13 +25,30 @@ func main() {
 	repository.Init(&cfg.ORM)
 	gin.SetMode(cfg.App.Mode)
 
-	log.Println("HTTP服务器启动",cfg.App.Addr)
+	log.Println("HTTP服务器启动", cfg.App.Addr)
 	logger.Info("HTTP服务器启动")
 
 	srv := &http.Server{
-		Addr: cfg.App.Addr
-		Handler
-		
+		Addr:    cfg.App.Addr,
+		Handler: routers.InitRouter(),
 	}
 
+	go func() {
+		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Fatalf("listen: %s\n", err)
+		}
+
+	}()
+
+	shutdown.NewHook().Close(
+		func() {
+			ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
+			defer cancel()
+			if err := srv.Shutdown(ctx); err != nil {
+				log.Println("HTTP服务器关闭错误", err)
+			} else {
+				log.Println("HTTP服务器关闭")
+			}
+		},
+	)
 }

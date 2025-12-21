@@ -5,8 +5,10 @@ go 1.25.5
 require (
 	github.com/fsnotify/fsnotify v1.9.0
 	github.com/gin-gonic/gin v1.11.0
+	github.com/satori/go.uuid v1.2.0
 	github.com/spf13/pflag v1.0.10
 	github.com/spf13/viper v1.21.0
+	gopkg.in/vansante/go-ffprobe.v2 v2.2.1
 )
 
 require (
