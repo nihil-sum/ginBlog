@@ -9,7 +9,6 @@ import (
 	"ginBlog/conf"
 	"github.com/satori/go.uuid"
 	"gopkg.in/vansante/go-ffprobe.v2"
-	"image"
 	"io"
 	"net/http"
 	"os"
